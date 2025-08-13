@@ -20,5 +20,5 @@ SmartStudy is a web-based learning platform that helps students access course no
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/smartstudy.git
+   git clone https://github.com/NathanielCodes365/SmartStudy.git
    cd smartstudy

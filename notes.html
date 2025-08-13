@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - SmartStudy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="notes.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">SmartStudy</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="notes.html">Notes</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html" class="btn">Sign Up</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+   
+    <main class="notes-container">
+        <div class="notes-sidebar">
+            <button id="newNoteBtn" class="btn">+ New Note</button>
+            <div class="notes-list">
+                <!-- Notes list will be populated by JS -->
+            </div>
+        </div>
+        
+        <div class="notes-editor">
+            <div id="emptyState">
+                <p>Select a note or create a new one</p>
+            </div>
+            <div id="editorContainer" class="hidden">
+                <input type="text" id="noteTitle" placeholder="Note title">
+                <textarea id="noteContent" placeholder="Write your note here..."></textarea>
+                <div class="editor-actions">
+                    <button id="saveNoteBtn" class="btn">Save</button>
+                    <button id="deleteNoteBtn" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="notes.js"></script>
+    <script src="firebase.js"></script>
+</body>
+</html>

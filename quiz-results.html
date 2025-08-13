@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results - SmartStudy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="quizzes.css">
+    <style>
+        .results-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+        
+        .score-summary {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 8px;
+        }
+        
+        .summary-item {
+            text-align: center;
+        }
+        
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .answers-review {
+            margin-top: 2rem;
+        }
+        
+        .answer-item {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: white;
+            border-left: 4px solid #ddd;
+        }
+        
+        .answer-item.correct {
+            border-left-color: #27ae60;
+            background-color: rgba(39, 174, 96, 0.05);
+        }
+        
+        .answer-item.incorrect {
+            border-left-color: #e74c3c;
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+        
+        .answer-question {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .answer-response {
+            display: flex;
+            margin-top: 0.5rem;
+        }
+        
+        .answer-label {
+            font-weight: bold;
+            margin-right: 0.5rem;
+            min-width: 80px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">SmartStudy</div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="notes.html">Notes</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="#" id="logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="results-container">
+        <div class="results-header">
+            <h1>Quiz Results</h1>
+            <div class="score-display" id="scoreDisplay"></div>
+            <p id="resultMessage"></p>
+        </div>
+        
+        <div class="score-summary">
+            <div class="summary-item">
+                <div class="summary-label">Questions</div>
+                <div class="summary-value" id="totalQuestions"></div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Correct</div>
+                <div class="summary-value" id="correctAnswers"></div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Time</div>
+                <div class="summary-value" id="timeTaken"></div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Percentage</div>
+                <div class="summary-value" id="percentage"></div>
+            </div>
+        </div>
+        
+        <div class="answers-review" id="answersReview">
+            <h2>Review Answers</h2>
+            <!-- Answers will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="action-buttons">
+            <a href="quizzes.html" class="btn">Take Another Quiz</a>
+            <a href="dashboard.html" class="btn">Back to Dashboard</a>
+        </div>
+    </main>
+    
+    <script src="firebase.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get results from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const score = urlParams.get('score');
+            const total = urlParams.get('total');
+            const percentage = urlParams.get('percentage');
+            const time = urlParams.get('time');
+            
+            // Display results
+            document.getElementById('scoreDisplay').textContent = `${score}/${total}`;
+            document.getElementById('correctAnswers').textContent = score;
+            document.getElementById('totalQuestions').textContent = total;
+            document.getElementById('percentage').textContent = `${percentage}%`;
+            document.getElementById('timeTaken').textContent = `${time}s`;
+            
+            // Set result message
+            const resultMessage = document.getElementById('resultMessage');
+            if (percentage >= 80) {
+                resultMessage.textContent = 'Excellent work! You mastered this material.';
+                resultMessage.style.color = '#27ae60';
+            } else if (percentage >= 60) {
+                resultMessage.textContent = 'Good job! Review your incorrect answers to improve.';
+                resultMessage.style.color = '#f39c12';
+            } else {
+                resultMessage.textContent = 'Keep practicing! Review your notes and try again.';
+                resultMessage.style.color = '#e74c3c';
+            }
+            
+            // TODO: Load detailed answers from database if needed
+            // For now, we'll just show the summary from URL params
+            
+            // Logout functionality
+            document.getElementById('logout').addEventListener('click', () => {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = 'login.html';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

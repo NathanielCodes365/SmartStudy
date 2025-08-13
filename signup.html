@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SmartStudy - Signup</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">SmartStudy</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="notes.html">Notes</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html" class="btn">Sign Up</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+     <section id="signup" class="auth-section hidden">
+      <div class="auth-container">
+        <h2>Create Account</h2>
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="signupName">Full Name</label>
+            <input type="text" id="signupName" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" name="password" required>
+          </div>
+          <button type="submit" class="btn">Sign Up</button>
+          <p class="auth-switch">Already have an account? <a href="login.html">Login</a></p>
+        </form>
+      </div>
+    </section><br>
+    <footer class="footer">
+    <p>&copy; 2025 SmartStudy. All rights reserved.</p>
+       </footer>
+</body>
+<script src="signup.js"></script>
+<script src="firebase.js"></script>
+</html>

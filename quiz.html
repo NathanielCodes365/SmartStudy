@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - SmartStudy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="quizzes.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">SmartStudy</div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="notes.html">Notes</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="#" id="logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="quiz-container">
+        <div id="quizEngineContainer"></div>
+    </main>
+
+    <script src="quiz-engine.js"></script>
+    <script src="firebase.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const quizId = urlParams.get('quizId');
+            
+            if (quizId) {
+                initQuiz(quizId, 'quizEngineContainer', async (results) => {
+                    // Save results to Firestore
+                    const user = firebase.auth().currentUser;
+                    if (user) {
+                        await firebase.firestore().collection('users').doc(user.uid)
+                            .collection('quizzes').doc(quizId)
+                            .update({
+                                completed: true,
+                                score: results.score,
+                                percentage: results.percentage,
+                                completedAt: results.completedAt
+                            });
+                    }
+                });
+            } else {
+                alert('No quiz specified');
+                window.location.href = 'quizzes.html';
+            }
+        });
+    </script>
+</body>
+</html>
